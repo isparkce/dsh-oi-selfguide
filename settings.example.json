@@ -1,0 +1,5 @@
+{
+  "cph-ng.companion.customPathScript": "/path/to/dsh-oi-selfguide/tools/cph-path.js",
+  "cph-ng.problem.problemFilePath": "${workspace}/${relativeDirname}/${basename}.bin",
+  "cph-ng.problem.testcaseFilePath": "${workspace}/${relativeDirname}/${basename}.${id}.${ext}"
+}

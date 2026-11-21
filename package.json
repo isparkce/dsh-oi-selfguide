@@ -1,0 +1,12 @@
+{
+  "name": "@isparkce/dsh-oi-selfguide",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "OI 讲解员 agent preset: explain problems, editorials, and OI concepts only.",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
