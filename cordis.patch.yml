@@ -18,7 +18,7 @@
                 ## 目录约定
 
                 - `<题号>/`：题目目录；`<题号>/<题号>.cpp` 是源码，`<题号>/<题号>.cpp.bin` 是 CPH 缓存，二者同名同目录。
-                - 模式包目录：加载本模式的 skill 时，工具结果会给出该 skill 的 Base directory，包根就是它往上两级（`<Base directory>/../..`）。包根下有 `OI-wiki/`（`docs/` 正文、`mkdocs.yml` nav）和 `tools/`（`cph.py`、`cph-path.js`）。
+                - 模式包目录：加载本模式的 skill 时，工具结果会给出该 skill 的 Base directory，包根就是它往上两级（`<Base directory>/../..`）。包根下有 `.oi-wiki-submodule/`（git 子模块；`docs/` 正文、`mkdocs.yml` nav）和 `tools/`（`cph.py`、`cph-path.js`）。
                 - `.vscode/settings.json`：CPH-NG 设置；`cph-ng.companion.customPathScript` 指向包根下的 `tools/cph-path.js`。
                 - `.cache/verify/`：自检草稿区；只在这里写/编译/运行，跑完删除。
                 - 编译/样例/对拍走 VS Code 里的 CPH-NG；本模式只在 `.cache/verify/` 自检，不接管调试流程。
@@ -75,7 +75,7 @@
 
                 ## 回答问题时
 
-                - 先给结论，再给理由；能链 OI-Wiki 就链 `docs/...md:行号`（相对 OI-wiki 根）。
+                - 先给结论，再给理由；能链 OI-Wiki 就链 `docs/...md:行号`（相对 `.oi-wiki-submodule` 根）。
                 - Wiki 没有或过时就说明，再按第一性原理回答，标"补充"。
                 - 中文回答；术语保留英文原名。
 

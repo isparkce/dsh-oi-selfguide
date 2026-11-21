@@ -1,0 +1,4 @@
+[submodule ".oi-wiki-submodule"]
+	path = .oi-wiki-submodule
+	url = https://github.com/OI-wiki/OI-wiki.git
+	branch = master
