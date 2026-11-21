@@ -5,9 +5,6 @@
   "private": true,
   "type": "module",
   "description": "OI 讲解员 agent preset: explain problems, editorials, and OI concepts only.",
-  "scripts": {
-    "postinstall": "node setup-oi-wiki.js"
-  },
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"

@@ -1,6 +1,6 @@
 # OI 讲解员 · DSH 模式
 
-仅自用，未测试，不保证稳定性，自行自定义。
+all AI，仅自用，未测试，不保证稳定性，自行自定义。
 
 ## 许可
 
@@ -27,22 +27,22 @@ dsh-oi-selfguide/
 
 ## 安装
 
-1. 克隆后初始化 OI Wiki 子模块：`git submodule update --init --recursive`。
+1. `git clone` 后初始化 OI Wiki 子模块：
+```bash
+git submodule update --init --recursive
+git -C .oi-wiki-submodule sparse-checkout init --no-cone
+git -C .oi-wiki-submodule sparse-checkout set '/docs/' '/mkdocs.yml'
+```
 2. 把这个目录放在不会被清理的位置。
-3. 装进 profile，二选一：
-   - GUI：Plugins → Add plugin → 选这个目录（包名 `@isparkce/dsh-oi-selfguide`）；
-   - 让 agent 执行 `plugin_manager install_bundle`，target 是这个目录的绝对路径。
+3. GUI：Plugins → Add plugin → 选这个目录（包名 `@isparkce/dsh-oi-selfguide`）。
 4. 开新会话，在模式列表里选「OI 讲解员」。
 
 ## 配置
 
-工作区把 `settings.example.json` 复制成 `<工作区>/.vscode/settings.json`，把
-`cph-ng.companion.customPathScript` 改成这个包里 `tools/cph-path.js` 的实际路径
-（绝对路径），把模板里的 `/path/to/dsh-oi-selfguide` 换掉即可。
-`problemFilePath` / `testcaseFilePath` 保持 `${workspace}/...` 不变。
-OI Wiki 内容在 `.oi-wiki-submodule/`，由 git 子模块管理；更新时用
-`git submodule update --remote --recursive`（或切到需要的子模块提交）。
+工作区把 `settings.example.json` 复制成 `<工作区>/.vscode/settings.json`，把 `cph-ng.companion.customPathScript` 改成这个包里 `tools/cph-path.js` 的实际路径（绝对路径），把模板里的 `/path/to/dsh-oi-selfguide` 换掉即可。`problemFilePath` / `testcaseFilePath` 保持 `${workspace}/...` 不变。
+
+OI Wiki 内容在 `.oi-wiki-submodule/`，由 git 子模块管理；更新时用 `git submodule update --remote --recursive`。
 
 ## 卸载
 
-先在 Plugins 里移除，或让 agent 执行 `plugin_manager remove_bundle @isparkce/dsh-oi-selfguide`，再删目录。
+Plugins 里移除后删目录。
