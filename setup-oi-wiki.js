@@ -2,8 +2,8 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const submoduleName = '.oi-wiki-submodule';
-const submoduleDir = path.join(__dirname, '..', submoduleName);
+const targetPkg = require.resolve('@isparkce/dsh-oi-selfguide/package.json');
+const submoduleDir = path.join(path.dirname(targetPkg), submoduleName);
 const gitmodulesPath = path.join(__dirname, '..', '.gitmodules');
 
 const docsPath = path.join(submoduleDir, 'docs');
