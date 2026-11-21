@@ -21,7 +21,7 @@ dsh-oi-selfguide/
 ├── skills/                # explain-problem / explain-editorial / oi-wiki
 ├── tools/                 # cph.py（读 CPH 缓存）、cph-path.js（CPH-NG 导入路径）
 ├── settings.example.json  # 工作区 .vscode/settings.json 模板
-├── LICENSE.md             # GPL-3.0
+├── LICENSE.md             # GPL-3.0-only
 └── README.md
 ```
 

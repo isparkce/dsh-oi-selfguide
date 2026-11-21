@@ -1,6 +1,7 @@
 {
   "name": "@isparkce/dsh-oi-selfguide",
   "version": "1.0.0",
+  "license": "GPL-3.0-only",
   "private": true,
   "type": "module",
   "description": "OI 讲解员 agent preset: explain problems, editorials, and OI concepts only.",
