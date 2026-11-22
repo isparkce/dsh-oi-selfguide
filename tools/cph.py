@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""Read CPH-NG's gzip-JSON problem cache.
+"""Read a CPH-NG gzip-JSON problem cache.
 
 Usage:
-    python3 /path/to/dsh-oi-selfguide/tools/cph.py [P1002]
+    python3 cph.py [problem-id]
 
-Without an argument, the most recently modified cache file is used.
-Problem caches live at <current directory>/<problem-id>/<problem-id>.cpp.bin,
-so run this from the OI workspace (the script itself may live anywhere).
-The script only reads; it never writes anywhere.
+Run from the OI workspace. Cache layout:
+    <workspace>/<problem-id>/<problem-id>.cpp.bin
 """
 from __future__ import annotations
 
@@ -23,55 +21,57 @@ MAX_FIELD = 4000
 def clip(text: str) -> str:
     if len(text) <= MAX_FIELD:
         return text
-    return text[:MAX_FIELD] + f"\n… [truncated {len(text) - MAX_FIELD} chars]"
+    return text[:MAX_FIELD] + f"\\n… [truncated {len(text) - MAX_FIELD} chars]"
 
 
-def pick(query: str) -> Path:
-    files = sorted(
-        ROOT.glob("*/*.cpp.bin"),
-        key=lambda p: p.stat().st_mtime,
-        reverse=True,
-    )
+def pick(problem_id: str = "") -> Path:
+    files = list(ROOT.glob("*/*.cpp.bin"))
+
+    if problem_id:
+        # Both the directory and source basename must match exactly.
+        expected_name = f"{problem_id}.cpp.bin"
+        matched = [
+            path for path in files
+            if path.parent.name == problem_id and path.name == expected_name
+        ]
+        if not matched:
+            sys.exit(f"no exact cache for {problem_id!r} under {ROOT}")
+        return matched[0]
+
     if not files:
         sys.exit(f"no problem caches under {ROOT} (expected <id>/<id>.cpp.bin)")
-    if query:
-        matched = [p for p in files if query.lower() in p.name.lower()]
-        if not matched:
-            names = ", ".join(p.name for p in files[:5])
-            sys.exit(f"no cache matching {query!r}; newest: {names}")
-        return matched[0]
-    return files[0]
+    return max(files, key=lambda path: path.stat().st_mtime)
 
 
 def main() -> None:
     path = pick(sys.argv[1] if len(sys.argv) > 1 else "")
     data = json.loads(gzip.decompress(path.read_bytes()))
-    raw_tests = list(data.get("testcases", {}).values())
+
+    raw_tests = list((data.get("testcases") or {}).values())
     tests = [
         {
-            "input": clip(t.get("stdin", {}).get("data", "")),
-            "answer": clip(t.get("answer", {}).get("data", "")),
+            "input": clip(test.get("stdin", {}).get("data", "")),
+            "answer": clip(test.get("answer", {}).get("data", "")),
         }
-        for t in raw_tests[:5]
+        for test in raw_tests
     ]
+
     overrides = data.get("overrides") or {}
-    print(
-        json.dumps(
-            {
-                "file": str(path.relative_to(ROOT)),
-                "name": data.get("name"),
-                "url": data.get("url"),
-                "limits": {
-                    "time_ms": overrides.get("timeLimitMs"),
-                    "memory_mb": overrides.get("memoryLimitMb"),
-                },
-                "test_count": len(raw_tests),
-                "tests": tests,
+    print(json.dumps(
+        {
+            "file": str(path.relative_to(ROOT)),
+            "name": data.get("name"),
+            "url": data.get("url"),
+            "limits": {
+                "time_ms": overrides.get("timeLimitMs"),
+                "memory_mb": overrides.get("memoryLimitMb"),
             },
-            ensure_ascii=False,
-            indent=2,
-        )
-    )
+            "test_count": len(raw_tests),
+            "tests": tests,
+        },
+        ensure_ascii=False,
+        indent=2,
+    ))
 
 
 if __name__ == "__main__":

@@ -29,7 +29,7 @@ dsh-oi-selfguide/
 
 1. `git clone` 后初始化 OI Wiki 子模块：
 ```bash
-git submodule update --init
+git submodule update --init --depth 1 --filter=blob:none
 git -C .oi-wiki-submodule sparse-checkout init --no-cone
 git -C .oi-wiki-submodule sparse-checkout set '/docs/' '/mkdocs.yml'
 ```
@@ -41,7 +41,7 @@ git -C .oi-wiki-submodule sparse-checkout set '/docs/' '/mkdocs.yml'
 
 工作区把 `settings.example.json` 复制成 `<工作区>/.vscode/settings.json`，把 `cph-ng.companion.customPathScript` 改成这个包里 `tools/cph-path.js` 的实际路径（绝对路径），把模板里的 `/path/to/dsh-oi-selfguide` 换掉即可。`problemFilePath` / `testcaseFilePath` 保持 `${workspace}/...` 不变。
 
-OI Wiki 内容在 `.oi-wiki-submodule/`，由 git 子模块管理；更新时用 `git submodule update --remote`。
+OI Wiki 内容在 `.oi-wiki-submodule/`，由 git 子模块管理；更新时用 `git submodule update --remote --depth 1 --filter=blob:none`。
 
 ## 卸载
 
